@@ -4,4 +4,5 @@ drf-spectacular==0.28.0
 django-filter==25.1
 Markdown==3.9
 djangorestframework_simplejwt==5.5.1
-psycopg2-binary==2.9.10
+dotenv == 0.9.9
+Pillow == 11.3.0
