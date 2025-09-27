@@ -22,20 +22,39 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView, TokenVerifyView,
 )
 
-from users.views import RegistrateView, SendVerificationLinkToUsersEmail, VerifyEmailView
+from users.views import RegistrateView, SendVerificationLinkToUsersEmail, GetProfile
+from products.views import GetProduct, ProductDetailView
+from admin_panel.views import AdminPanelProduct, AdminCreateProduct, AdminUpdateUserRole
+
 
 
 urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_refresh'),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+
 
     #USERS_URLS
     path('register/', RegistrateView.as_view(), name='register'),
     path('verify/', SendVerificationLinkToUsersEmail.as_view(), name='verify'),
-    path('verify-email/', VerifyEmailView.as_view(), name='verify-email'),
+    path('profile/', GetProfile.as_view(), name='profile'),
+
+
+    #TOKEN_URLS
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_refresh'),
+
+
+    #PRODUCTS_URLS
+    path('products/', GetProduct.as_view(), name='products'),
+    path('products/<int:id>/', ProductDetailView.as_view(), name='product-detail'),
+
+
+    #ADMIN_PANEL_URLS
+    path('admin_panel/', AdminCreateProduct.as_view(), name='admin_panel'),
+    path('admin_panel/<int:id>/', AdminPanelProduct.as_view(), name='admin_panel'),
+    path('admin_panel/users/<int:id>/role/', AdminUpdateUserRole.as_view(), name='admin-update-user-role'),
+
 ]

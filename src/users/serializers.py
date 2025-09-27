@@ -36,3 +36,8 @@ class VerifyEmailSerializer(serializers.Serializer):
 
         self.context["user"] = user
         return value
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["email", "username", "role"]

@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
 from rest_framework.views import APIView
-from users.serializers import RegistrateSerializer, VerifyEmailSerializer
+from users.serializers import RegistrateSerializer, VerifyEmailSerializer, UserSerializer
 
 from users.models import User
 
@@ -17,8 +17,8 @@ from users.models import User
 class RegistrateView(APIView):
     def post(self, request):
         serializer = RegistrateSerializer(data = request.data)
-        if serializer. is_valid():
-            user = serializer.save()
+        if serializer.is_valid():
+            serializer.save()
             return Response({"message": "Пользователь успешно зарегистрирован."}, status= status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -55,8 +55,7 @@ class SendVerificationLinkToUsersEmail(APIView):
         return Response({"message": "Код верификации отправлен на вашу почту"}, status=HTTP_200_OK)
 
 
-class VerifyEmailView(APIView):
-    def post(self, request):
+    def patch(self, request):
         serializer = VerifyEmailSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
 
@@ -69,3 +68,17 @@ class VerifyEmailView(APIView):
         return Response({"message": "Email успешно верифицирован"}, status=HTTP_200_OK)
 
 
+class GetProfile(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def patch(self, request):
+        user = request.user
+        serializer = UserSerializer(user, data=request.data, partial=True)  # partial=True для PATCH
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)

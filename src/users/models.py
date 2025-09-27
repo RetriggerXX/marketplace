@@ -1,4 +1,4 @@
-import uuid
+
 
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser
@@ -31,7 +31,6 @@ class User(AbstractBaseUser):
         ]
     username = models.CharField(unique=True, max_length=30)
     email = models.EmailField(unique=True)
-    is_verified = models.BooleanField(default=False)
     role = models.CharField(max_length=20, default="unverified")
     date_joined = models.DateTimeField(auto_now_add=True)
     verification_token = models.UUIDField(default=None, editable=False, null=True, unique=True)
