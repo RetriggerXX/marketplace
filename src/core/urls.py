@@ -49,12 +49,12 @@ urlpatterns = [
 
     #PRODUCTS_URLS
     path('products/', GetProduct.as_view(), name='products'),
-    path('products/<int:id>/', ProductDetailView.as_view(), name='product-detail'),
+    path('products/<int:id>/', ProductDetailView.as_view(), name='product_detail'),
 
 
     #ADMIN_PANEL_URLS
-    path('admin_panel/', AdminCreateProduct.as_view(), name='admin_panel'),
+    path('admin_panel/', AdminCreateProduct.as_view(), name='admin_create_product'),
     path('admin_panel/<int:id>/', AdminPanelProduct.as_view(), name='admin_panel'),
-    path('admin_panel/users/<int:id>/role/', AdminUpdateUserRole.as_view(), name='admin-update-user-role'),
+    path('admin_panel/users/<int:id>/role/', AdminUpdateUserRole.as_view(), name='admin_update_user_role'),
 
 ]

@@ -11,11 +11,11 @@ from django.db.models import Q
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, password):
+    def create_user(self, email, username, password,  role="unverified"):
         if not (email, username, password):
             raise ValueError("Не все данные были переданы")
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username)
+        user = self.model(email=email, username=username, role = role)
         user.set_password(password)
         user.save()
         return user
