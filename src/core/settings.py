@@ -58,6 +58,9 @@ INSTALLED_APPS = [
 
 ]
 
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -111,7 +114,7 @@ DATABASES = {
         "NAME": os.environ.get("NAME"),
         "USER": os.environ.get("USER"),
         "PASSWORD": os.environ.get("PASS"),
-        "HOST": os.environ.get("HOST"),
+        "HOST": "host.docker.internal",
         "PORT": os.environ.get("PORT"),
     }
 
